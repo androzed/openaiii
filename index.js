@@ -13,23 +13,40 @@ const client = new OpenAI({
 
 app.use(express.json());
 
+// Initialize conversation history as an empty array
+let conversationHistory = [
+  { role: "system", content: "You are a helpful assistant." },
+];
+
 app.post('/chat', async (req, res) => {
   const { userMessage } = req.body;
+
   if (!userMessage) {
     return res.status(400).json({ error: 'Message is required' });
   }
+
+  // Add the user's message to the conversation history
+  conversationHistory.push({ role: "user", content: userMessage });
+
   try {
+    // Send the conversation history to the OpenAI API
     const response = await client.chat.completions.create({
-      messages: [
-        { role: "system", content: "" },
-        { role: "user", content: userMessage }
-      ],
+      messages: conversationHistory,
       model: "gpt-4o",
       temperature: 1,
       max_tokens: 4096,
       top_p: 1
     });
-    res.json({ response: response.choices[0].message.content });
+
+    // Get the assistant's reply
+    const assistantMessage = response.choices[0].message.content;
+
+    // Add the assistant's reply to the conversation history
+    conversationHistory.push({ role: "assistant", content: assistantMessage });
+
+    // Return the assistant's response
+    res.json({ response: assistantMessage });
+
   } catch (err) {
     console.error("Error during API call:", err);
     res.status(500).json({ error: 'Internal server error' });
