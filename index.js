@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 
 const client = new OpenAI({
   baseURL: "https://models.inference.ai.azure.com",
-  apiKey: "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",
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 app.use(express.json());
