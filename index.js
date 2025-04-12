@@ -25,7 +25,6 @@ let conversationHistory = [
 
 app.post('/chat', async (req, res) => {
   // Get userMessage, systemMessage, and assistantMessage from the request body
-  // If the body is in form fields, they will be parsed as strings.
   const { userMessage = [], systemMessage = [], assistantMessage = [] } = req.body;
 
   // Add the provided systemMessage to the conversation history
@@ -77,12 +76,6 @@ app.post('/chat', async (req, res) => {
 
     // Return the assistant's response
     res.json({ response: assistantMessageResponse });
-
-    // Trigger n8n webhook with the response
-    await axios.post('http://localhost:5678/webhook/your-webhook-name', {
-      assistantResponse: assistantMessageResponse,
-      conversationHistory: conversationHistory
-    });
 
   } catch (err) {
     console.error("Error during API call:", err);
