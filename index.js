@@ -1,7 +1,6 @@
 const express = require('express');
 const { OpenAI } = require('openai');
 const dotenv = require('dotenv');
-const axios = require('axios');  // Make sure to install axios to make HTTP requests
 dotenv.config();
 
 const app = express();
