@@ -61,7 +61,10 @@ app.post('/chat', async (req, res) => {
     // Send the updated conversation history to OpenAI API
     const response = await client.chat.completions.create({
       messages: conversationHistory,
-      model: "gpt-4o
+      model: "gpt-4o",
+      temperature: 0.6,
+      max_tokens: 8000,
+      top_p: 1
     });
 
     // Get the assistant's response
