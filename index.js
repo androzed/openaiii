@@ -62,8 +62,8 @@ app.post('/chat', async (req, res) => {
     const response = await client.chat.completions.create({
       messages: conversationHistory,
       model: "gpt-4o",
-      temperature: 1,
-      max_tokens: 16384,
+      temperature: 0.6,
+      max_tokens: 8000,
       top_p: 1
     });
 
