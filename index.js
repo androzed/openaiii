@@ -63,7 +63,7 @@ app.post('/chat', async (req, res) => {
       messages: conversationHistory,
       model: "gpt-4o",
       temperature: 1,
-      max_tokens: 4096,
+      max_tokens: 16384,
       top_p: 1
     });
 
