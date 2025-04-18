@@ -7,7 +7,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const client = new OpenAI({
-  baseURL: "https://models.inference.ai.azure.com",
+  baseURL: "https://models.github.ai/inference",
   apiKey: process.env.OPENAI_API_KEY,
 });
 
@@ -61,9 +61,8 @@ app.post('/chat', async (req, res) => {
     // Send the updated conversation history to OpenAI API
     const response = await client.chat.completions.create({
       messages: conversationHistory,
-      model: "gpt-4o",
-      temperature: 0.6,
-      max_tokens: 8000,
+      model: "openai/gpt-4.1",
+      temperature: 1.0,
       top_p: 1
     });
 
